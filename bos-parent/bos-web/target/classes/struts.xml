@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="bos" namespace="/" extends="struts-default">
+	
+		<!-- 配置拦截器 -->
+		<interceptors>
+			<!-- <interceptor name="bosLoginInterceptor" class="com.itheima.bos.web.interceptor.BOSLoginInterceptor">
+				排除放行的方法 :写action中方法名称
+				<param name="excludeMethods">login,xxx</param>
+			</interceptor> -->
+			<!-- 配置拦截器栈 -->
+			<interceptor-stack name="myStack">
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+				<!-- <interceptor-ref name="bosLoginInterceptor"></interceptor-ref> -->
+			</interceptor-stack>
+		</interceptors>
+		
+		<!-- 配置默认的拦截器栈 -->
+		<default-interceptor-ref name="myStack"></default-interceptor-ref>
+		
+		<!-- 配置全局的结果视图 -->
+		<global-results>
+			<result name="login">/login.jsp</result>
+			<result name="unauthorized">/unauthorized.jsp</result>
+		</global-results>
+		
+		<!-- 处理全局异常 -->
+		<global-exception-mappings>
+			<exception-mapping result="unauthorized" exception="org.apache.shiro.authz.UnauthorizedException"></exception-mapping>
+		</global-exception-mappings>
+		
+		<!-- class:默认ActionSupport  method:默认执行excute方法 -->
+		<action name="page_*_*">
+			<!-- 结果试图默认跳转success -->
+			<result>/WEB-INF/pages/{1}/{2}.jsp</result>
+		</action>
+		
+		<!-- 用户模块 -->
+		<action name="userAction_*" class="userAction" method="{1}">
+			<result name="login">/login.jsp</result>
+			<result name="index" type="redirect">/index.jsp</result>
+			<result name="list">/WEB-INF/pages/admin/userlist.jsp</result>
+		</action>
+		
+		<!-- 取派员模块 -->
+		<action name="staffAction_*" class="staffAction" method="{1}">
+			<result name="list">/WEB-INF/pages/base/staff.jsp</result>
+		</action>
+		
+		<!-- 区域模块 -->
+		<action name="regionAction_*" class="regionAction" method="{1}">
+			<result name="list">/WEB-INF/pages/base/region.jsp</result>
+		</action>
+		
+		<!-- 分区模块 -->
+		<action name="subareaAction_*" class="subareaAction" method="{1}">
+			<result name="list">/WEB-INF/pages/base/subarea.jsp</result>
+		</action>
+		
+		<!-- 定区模块 -->
+		<action name="decidedzoneAction_*" class="decidedzoneAction" method="{1}">
+			<result name="list">/WEB-INF/pages/base/decidedzone.jsp</result>
+		</action>
+		
+		<!-- 业务通知单模块 -->
+		<action name="noticebillAction_*" class="noticebillAction" method="{1}">
+			<result name="list">/WEB-INF/pages/qupai/noticebill.jsp</result>
+		</action>
+		
+		<!-- 工单模块 -->
+	    <action name="workbillAction_*" class="workbillAction" method="{1}">
+	    </action>
+		
+		<!-- 业务通知单模块 -->
+		<action name="workordermanagerAction_*" class="workordermanagerAction" method="{1}">
+			<result name="list">/WEB-INF/pages/qupai/workorderimport.jsp</result>
+		</action>
+		<!-- 人工调度模块 -->
+		<action name="noticebill_*" class="noticebillAction" method="{1}">
+			<result name="list">/WEB-INF/pages/qupai/diaodu.jsp</result>
+		</action>
+		
+		<!-- 权限数据模块 -->
+		<action name="functionAction_*" class="functionAction" method="{1}">
+			<result name="list">/WEB-INF/pages/admin/function.jsp</result>
+		</action>
+		
+		<!-- 角色模块 -->
+		<action name="roleAction_*" class="roleAction" method="{1}">
+			<result name="list">/WEB-INF/pages/admin/role.jsp</result>
+			<result name="edit">/WEB-INF/pages/admin/role_edit.jsp</result>
+		</action>
+
+		
+		<!-- 用户意见模块 -->
+		<action name="userAdviceAction_*" class="userAdviceAction" method="{1}">
+			<result name="list">/WEB-INF/pages/admin/advice.jsp</result>
+		</action>
+		<!--记录模块  -->
+		<action name="logAction_*" class="logAction" method="{1}">
+			<result name="list">/WEB-INF/pages/admin/record.jsp</result>
+		</action>
+	</package>
+</struts>
